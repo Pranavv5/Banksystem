@@ -15,22 +15,7 @@ private:
  float balance;
  static long NextAccountNumber;
 public:
- Account(){}
- Account(string fname,string lname,float balance);
- long getAccNo(){return accountNumber;}
- string getFirstName(){return firstName;}
- string getLastName(){return lastName;}
- float getBalance(){return balance;}
- 
- void Deposit(float amount);
- void Withdraw(float amount);
- static void setLastAccountNumber(long accountNumber);
- static long getLastAccountNumber();
- friend ofstream & operator<<(ofstream &ofs,Account &acc);
- friend ifstream & operator>>(ifstream &ifs,Account &acc);
- friend ostream & operator<<(ostream &os,Account &acc);
-};
-long Account::NextAccountNumber=0;
+
 class Bank
 {
 private:
@@ -49,7 +34,7 @@ int main()
 {
  Bank b;
  Account acc;
- 
+
  int choice;
  string fname,lname;
  long accountNumber;
@@ -121,7 +106,7 @@ cin>>accountNumber;
 exit(0);
  }
  }while(choice!=7);
- 
+
  return 0;
 }
 Account::Account(string fname,string lname,float balance)
@@ -165,7 +150,7 @@ ifstream & operator>>(ifstream &ifs,Account &acc)
  ifs>>acc.lastName;
  ifs>>acc.balance;
  return ifs;
- 
+
 }
 ostream & operator<<(ostream &os,Account &acc)
 {
@@ -177,7 +162,7 @@ ostream & operator<<(ostream &os,Account &acc)
 }
 Bank::Bank()
 {
- 
+
  Account account;
  ifstream infile;
  infile.open("Bank.data");
@@ -192,18 +177,18 @@ Bank::Bank()
  accounts.insert(pair<long,Account>(account.getAccNo(),account));
  }
  Account::setLastAccountNumber(account.getAccNo());
- 
+
  infile.close();
- 
+
 }
 Account Bank::OpenAccount(string fname,string lname,float balance)
 {
  ofstream outfile;
  Account account(fname,lname,balance);
  accounts.insert(pair<long,Account>(account.getAccNo(),account));
- 
+
  outfile.open("Bank.data", ios::trunc);
- 
+
  map<long,Account>::iterator itr;
  for(itr=accounts.begin();itr!=accounts.end();itr++)
  {
@@ -247,7 +232,7 @@ Bank::~Bank()
 {
  ofstream outfile;
  outfile.open("Bank.data", ios::trunc);
- 
+
  map<long,Account>::iterator itr;
  for(itr=accounts.begin();itr!=accounts.end();itr++)
  {
